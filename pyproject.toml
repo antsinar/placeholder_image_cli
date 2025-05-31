@@ -1,7 +1,8 @@
 [project]
 name = "placeholdercli"
 version = "0.1.0"
-description = "Add your description here"
+description = "Δημιουργία placeholder εικόνων με συγκεκριμένες διαστάσεις και αναλογίες."
+classifiers = ["Private :: Do Not Upload"]
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
