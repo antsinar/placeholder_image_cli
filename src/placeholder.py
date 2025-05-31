@@ -69,9 +69,26 @@ def validate_range(value: int, bounds: BoundTuple) -> bool:
     return value >= bounds.lower and value <= bounds.upper
 
 
+def normalize_ratio(ratio: RatioTuple):
+    """
+    Implements the Eucledian algorithm to find the greatest common divisor
+
+    Returns:
+        RatioTuple: a normalized ratio
+    """
+    _w, _h = ratio
+    while _w != _h:
+        if _w > _h:
+            _w -= _h
+        else:
+            _h -= _w
+    return RatioTuple(width=ratio.width // _w, height=ratio.height // _w)
+
+
 def dimmentions_from_ratio(
-    ratio: RatioTuple, base_dimmention: int = 100
+    ratio: RatioTuple, base_dimmention: int = 400
 ) -> tuple[int, int]:
+    ratio = normalize_ratio(ratio)
     if base_dimmention * ratio.width > BOUNDS["width"].upper:
         base_dimmention = BOUNDS["width"].upper // ratio.width
     if base_dimmention * ratio.height > BOUNDS["height"].upper:
