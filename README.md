@@ -30,4 +30,4 @@ uv run 'https://raw.githubusercontent.com/antsinar/placeholder_image_cli/refs/he
 - [X] out:
   - output directory, mandatory if you are executing from a remote source
   - used with the -o or --out flag
-  - usage --out <directory location>
+  - usage --out <directory_location>
