@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from collections import namedtuple
 import logging
 from PIL import Image
+from PIL import ImageFilter
 from PIL.ImageDraw import ImageDraw
 import re
 from enum import auto, StrEnum
@@ -117,6 +118,7 @@ class ImageGenerator:
     def start(self):
         self._setup_frame()
         self._setup_cross()
+        self._smoothen_image()
         self._save_image()
 
     def _setup_frame(self):
@@ -134,6 +136,9 @@ class ImageGenerator:
         draw.line(
             (0, self.height, self.width, 0), fill=self.inverted_color, width=_width
         )
+
+    def _smoothen_image(self):
+        self.image.filter(ImageFilter.GaussianBlur(radius=1))
 
     def _save_image(self):
         _save_path = (
