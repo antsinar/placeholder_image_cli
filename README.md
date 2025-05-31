@@ -13,6 +13,9 @@ Example: Create a 3000x2000px placeholder image with a black color and save it i
 uv run 'https://raw.githubusercontent.com/antsinar/placeholder_image_cli/refs/heads/main/src/placeholdercli.py' size --width 3000 --height 2000 --color=#000000 --out .
 ```
 
+## Requirements
+- [uv](https://docs.astral.sh/uv/) should be installed on your system
+
 ## CLI Options
 ### [mandatory] 
 - [X] option: size or ratio
@@ -21,7 +24,7 @@ uv run 'https://raw.githubusercontent.com/antsinar/placeholder_image_cli/refs/he
     - width and height are capped internally in the range of 32, 4000 px
   - ratio indicates the aspect ratio of the image
     - requires the --ratio flag to set the aspect ratio
-    - ratio takes a comma separated list of two integers, internally capped in the range of 1, 30
+    - ratio takes a whitespace separated list of two integers, internally capped in the range of 1, 30
 ### [optional] 
 - [X] color:
   - sets up the background color of the placeholder image

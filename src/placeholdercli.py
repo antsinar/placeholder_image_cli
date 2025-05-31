@@ -189,9 +189,6 @@ def main():
         nargs="?",
         default=Path(__file__).parent.parent,
     )
-    parser.description = (
-        "Generates a placeholder image with the specified width and height"
-    )
     args = parser.parse_args()
 
     match args.option:
