@@ -21,7 +21,7 @@ RGBTuple = namedtuple("RGBTuple", ["r", "g", "b"])
 RatioTuple = namedtuple("RatioTuple", ["width", "height"])
 
 
-class DimmentionOptions(StrEnum):
+class DimensionOptions(StrEnum):
     SIZE = auto()
     RATIO = auto()
 
@@ -91,15 +91,15 @@ def normalize_ratio(ratio: RatioTuple):
     return RatioTuple(width=ratio.width // _w, height=ratio.height // _w)
 
 
-def dimmentions_from_ratio(
-    ratio: RatioTuple, base_dimmention: int = 400
+def dimensions_from_ratio(
+    ratio: RatioTuple, base_dimension: int = 400
 ) -> tuple[int, int]:
     ratio = normalize_ratio(ratio)
-    if base_dimmention * ratio.width > BOUNDS["width"].upper:
-        base_dimmention = BOUNDS["width"].upper // ratio.width
-    if base_dimmention * ratio.height > BOUNDS["height"].upper:
-        base_dimmention = BOUNDS["height"].upper // ratio.height
-    return (base_dimmention * ratio.width), (base_dimmention * ratio.height)
+    if base_dimension * ratio.width > BOUNDS["width"].upper:
+        base_dimension = BOUNDS["width"].upper // ratio.width
+    if base_dimension * ratio.height > BOUNDS["height"].upper:
+        base_dimension = BOUNDS["height"].upper // ratio.height
+    return (base_dimension * ratio.width), (base_dimension * ratio.height)
 
 
 def placeholder_exists(
@@ -176,7 +176,7 @@ class ImageGenerator:
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("option", help="fixed size or ratio", type=DimmentionOptions)
+    parser.add_argument("option", help="fixed size or ratio", type=DimensionOptions)
     parser.add_argument("--width", help="width of the image", type=int, nargs="?")
     parser.add_argument("--height", help="height of the image", type=int, nargs="?")
     parser.add_argument("--ratio", help="image aspect ratio", type=int, nargs="*")
@@ -195,7 +195,7 @@ def main():
     args = parser.parse_args()
 
     match args.option:
-        case DimmentionOptions.SIZE:
+        case DimensionOptions.SIZE:
             if not (args.width and args.height):
                 logger.error("Missing width or height")
                 return 1
@@ -206,7 +206,7 @@ def main():
                 logger.error(f"Invalid size {args.width}x{args.height}")
                 return 1
             width, height = args.width, args.height
-        case DimmentionOptions.RATIO:
+        case DimensionOptions.RATIO:
             if not validate_ratio(args.ratio):
                 logger.error(f"Invalid ratio: {args.ratio}")
                 return 1
@@ -215,7 +215,7 @@ def main():
             except IndexError:
                 logger.error("Missing width or height ratio")
                 return 1
-            width, height = dimmentions_from_ratio(ratio)
+            width, height = dimensions_from_ratio(ratio)
 
         case _:
             logger.error(f"Invalid option {args.option}")
