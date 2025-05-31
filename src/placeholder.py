@@ -9,8 +9,6 @@ import re
 from enum import auto, StrEnum
 from pathlib import Path
 
-logger = logging.getLogger(__name__)
-
 BoundTuple = namedtuple("BoundTuple", ["lower", "upper"])
 RGBTuple = namedtuple("RGBTuple", ["r", "g", "b"])
 RatioTuple = namedtuple("RatioTuple", ["width", "height"])
@@ -151,10 +149,10 @@ class ImageGenerator:
 def main():
     parser = ArgumentParser()
     parser.add_argument("option", help="fixed size or ratio", type=DimmentionOptions)
-    parser.add_argument("-c", "--color", type=str, default="#000000")
     parser.add_argument("--width", help="width of the image", type=int, nargs="?")
     parser.add_argument("--height", help="height of the image", type=int, nargs="?")
     parser.add_argument("--ratio", help="image aspect ratio", type=int, nargs="*")
+    parser.add_argument("-c", "--color", type=str, default="#96b08a")
     parser.add_argument(
         "-o",
         "--out",
@@ -214,4 +212,12 @@ def main():
 
 
 if __name__ == "__main__":
+    logs_location = Path(__file__).parent.parent / "logs/usage.log"
+    logs_location.parent.mkdir(exist_ok=True, parents=True)
+    logging.basicConfig(
+        format="[%(asctime)s] %(levelname)s : %(message)s",
+        filename=(logs_location).as_posix(),
+        level=logging.INFO,
+    )
+    logger = logging.getLogger(__name__)
     main()
